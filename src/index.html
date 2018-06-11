@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Footnote Code Generator</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!--importing the css style doc-->
+<link rel="stylesheet" type="text/css" href="footnoteCodeGen.css">
+
+</head>
+
+<!--title-->
+<div id="title">
+ <h3>Footnote HTML Code generator</h3>
+</div>
+<!--------->
+
+
+<h4>Choose whether you want Table or Text footnote:</h4>
+<p>
+  <select class="btn btn-outline-dark" id="TableText" onclick="inputOption()">
+    <option value="text" id="text">Text</option>
+    <option value="table" id="table" >Table</option>
+  </select>
+</p>
+
+
+
+<!--This part will appear when user choose the table option-->
+<div id="tableNumber">
+  <h4>State the Table Number:</h4>
+  <div class="alert alert-warning" id="alertTableNumber">Required!  Please input a Table number</div>
+  <p>
+    <input type="number" min="0" name="tableNo" class="form-control " id="tableNo" value="" required>
+  </p>
+  <p>
+</div>
+<!------------------------------------------------------------>
+
+
+<h4>How many footnotes:</h4>
+<p>
+  <input type="number" min="0" name="FootNum" class="form-control " id="FootNum" value="">
+</p>
+
+
+<p>
+    <button class="btn btn-outline-dark"  onclick="GenerateCode()" value="Next">Next</button>
+    <button class="btn btn-outline-dark" onclick="Clear()" value="Clear">Clear</button>
+  
+</p>
+
+
+<!--This will appear when clicking submit button-->
+
+<!--Footnote at bottom page-->
+<div id="bottomFootnoteContainer" >
+	<h4>Text Footnote code to put at the bottom of page:</h4>
+	 
+	  <div  id="bottomFootnote" class="editBox" >
+	    <p id="bottomFootnoteClass"></p>
+	      <p id="bottomFootnoteCode">
+	      </p>
+	    <p id="bottomFootnoteEnd"</p>
+	  </div>
+	   <p><button class="btn btn-outline-dark" onclick="copyCode('bottomFootnote')">Copy Code</button></p>
+
+	  <!--Footnote in text-->
+	<h4>Footnote code to put in HTML part of Text:</h4>
+	  <div contenteditable="true" class="editBox" id="textFootnote">
+	    <p id="textFootnoteCode">
+	    </p>
+	  </div>
+	  <p><button class="btn btn-outline-dark" onclick="copyCode('textFootnote')">Copy Code</button></p>
+</div>
+  <!--------------------->
+<!------------------------------------------------>
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+<!--Javascript file-->
+<script src="bundle.js"></script>
+
+
+</body>
+
+</html>
