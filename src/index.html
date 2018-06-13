@@ -1,36 +1,50 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Footnote Code Generator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Footnote Code Gen</title>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<!--importing the css style doc-->
-<link rel="stylesheet" type="text/css" href="footnoteCodeGen.css">
+<!--style sheet-->
+<link rel="stylesheet" href="bootstrap-4.1.1-dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="footnoteGenerator.css">
+
+<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+
+<!--scripts-->
+<script src="jquery-ui/external/jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
+
+
+<script src="bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
+
 
 </head>
 
-<!--title-->
+<body>
+
+
+ 
+ <!--title-->
 <div id="title">
  <h3>Footnote HTML Code generator</h3>
 </div>
-<!--------->
-
+<!------------>
+<h4>French or English</h4>
+<p>
+  <select class="btn btn-outline-dark" id="Language" onchange="Clear()">
+    <option value="english" id="english" >English</option>
+    <option value="french" id="french">French</option>
+  </select>
+</p>
 
 <h4>Choose whether you want Table or Text footnote:</h4>
 <p>
-  <select class="btn btn-outline-dark" id="TableText" onclick="inputOption()">
+  <select class="btn btn-outline-dark" id="TableText" onchange="inputOption()">
     <option value="text" id="text">Text</option>
     <option value="table" id="table" >Table</option>
   </select>
 </p>
-
-
 
 <!--This part will appear when user choose the table option-->
 <div id="tableNumber">
@@ -41,7 +55,7 @@
   </p>
   <p>
 </div>
-<!------------------------------------------------------------>
+<!------------------------>
 
 
 <h4>How many footnotes:</h4>
@@ -52,7 +66,6 @@
 
 <p>
     <button class="btn btn-outline-dark"  onclick="GenerateCode()" value="Next">Next</button>
-    <button class="btn btn-outline-dark" onclick="Clear()" value="Clear">Clear</button>
   
 </p>
 
@@ -61,38 +74,32 @@
 
 <!--Footnote at bottom page-->
 <div id="bottomFootnoteContainer" >
-	<h4>Text Footnote code to put at the bottom of page:</h4>
-	 
-	  <div  id="bottomFootnote" class="editBox" >
-	    <p id="bottomFootnoteClass"></p>
-	      <p id="bottomFootnoteCode">
-	      </p>
-	    <p id="bottomFootnoteEnd"</p>
-	  </div>
-	   <p><button class="btn btn-outline-dark" onclick="copyCode('bottomFootnote')">Copy Code</button></p>
+<h4>Text Footnote code to put at the bottom of page:</h4>
+ 
+  <div  id="bottomFootnote" class="editBox" >
+    <p id="bottomFootnoteCode"></p>  
+  </div>
+  
+   <p><button class="btn btn-outline-dark" onclick="copyCode('bottomFootnote')">Copy Code</button></p>
 
-	  <!--Footnote in text-->
-	<h4>Footnote code to put in HTML part of Text:</h4>
-	  <div contenteditable="true" class="editBox" id="textFootnote">
-	    <p id="textFootnoteCode">
-	    </p>
-	  </div>
-	  <p><button class="btn btn-outline-dark" onclick="copyCode('textFootnote')">Copy Code</button></p>
+  <!--Footnote in text-->
+<h4>Footnote code to put in HTML part of Text:</h4>
+  <div contenteditable="true" class="editBox" id="textFootnote">
+    <p id="textFootnoteCode">
+    </p>
+  </div>
+  <p><button class="btn btn-outline-dark" onclick="copyCode('textFootnote')">Copy Code</button></p>
+  <p><button class="btn btn-outline-dark" onclick="Clear()" value="Clear">Clear</button></p>
 </div>
-  <!--------------------->
-<!------------------------------------------------>
+</br>
 
-
-<p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 
 
-<!--Javascript file-->
-<script src="bundle.js"></script>
+<script src="footnoteGenerator.js"></script>
 
 
 </body>
-
 </html>
