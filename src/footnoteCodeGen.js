@@ -1,4 +1,4 @@
-// copies and select html code
+//copies html code
 function copyCode(objId){
   fnDeSelect();
   if (document.selection){
@@ -20,37 +20,74 @@ function fnDeSelect(){
   window.getSelection().removeAllRanges();
 }
 
-
 // generates the middle part of the code
 // tableNum should be = "" if the user requested text footnotes.
 // Else tableNum should be an integer with a dot after it in a string
-function footnoteMiddleCode(numFootnotes, tableNum){
+function footnoteReferenceCode(numFootnotes, tableNum, language){
     var code = "";
-    var insertText = '&lt;p><span class="insertText" contenteditable="true" >************INSERT TEXT HERE************</span>&lt;/p>';
+    var insertText = '&lt;p><span class="insertText" onclick="this.select();" contenteditable="true" >************INSERT TEXT HERE************</span>&lt;/p>';
+  var header = "";
+  var footnote = "";
+  var reference = "";
+  var referrer = "";
+  
+  // pick language
+  if(language == "French"){
+    header = "Note de bas de page";
+    footnote = "Note de bas de page";
+    reference = "Retour à la référence de la note de bas de page";
     
+  } else if (language == "English"){
+    header = "Footnotes";
+    footnote = "Footnote";
+    reference = "Return to footnote";
+    referrer = '&lt;span class="wb-invisible"> referrer&lt;/span>';
+  }
+    
+	
+	// set up the div class
+	code += '&lt;div class="wb-fnote" role="note">&lt;dl><br> ';
+	
+	if(tableNum == ""){ // user selected text
+		code += '&lt;h2 id="fn">' + header  + '&lt;/h2><br>'; // only text footnotes reference has h2 heading
+	}
+	
   
     for(var i = 1; i <= numFootnotes; ++i){
-      code += "&nbsp;&nbsp;&nbsp;&nbsp;" + '&lt;dt id="fn' + tableNum + i + '">Footnote ' + i + ' &lt;/dt>' 
-        + '<br>&nbsp;&nbsp;&nbsp;&nbsp;' + '&lt;dd id="fn' + tableNum + i + '" tabindex="-1" aria-labelledby="fn' + tableNum + i + '-dt">' 
+      code += "&nbsp;&nbsp;&nbsp;&nbsp;" + '&lt;dt>' + footnote  + ' ' + i +'&lt;/dt>' 
+        + '<br>&nbsp;&nbsp;&nbsp;&nbsp;' + '&lt;dd id="fn' + tableNum + i + '">' 
         + '<br>&nbsp;&nbsp;&nbsp;&nbsp;' + insertText 
-        + '<br>&nbsp;&nbsp;&nbsp;&nbsp;' +  '&lt;p class="fn-rtn">&lt;a href="#fn' + tableNum + i + '-rf">&lt;span class="wb-inv">' 
-        + 'Return to footnote &lt;/span>' + i + '&lt;span class="wb-inv"> referrer&lt;/span>&lt;/a>&lt;/p>'
+        + '<br>&nbsp;&nbsp;&nbsp;&nbsp;' +  '&lt;p class="fn-rtn">&lt;a href="#fn' + tableNum + i + '-rf">&lt;span class="wb-invisible">' + reference  + ' &lt;/span>' 
+		+ i + referrer + '&lt;/a>&lt;/p>'
         + '<br>&nbsp;&nbsp;&nbsp;&nbsp;' + '&lt;/dd>' 
-        + "<br><br>";
+        + "<br>";
  
     }
-  
+	
+	// closes div : the last part of the footnote code	
+	code += "&lt;/dl>&lt;/div>";
+	
     $('#bottomFootnoteCode').html(code);
+ 
 }
 
 
 // generates the footnote code to put in text/table section
 // tableNum should be = "" if the user requested text footnotes.
 // Else tableNum should be an integer with a dot after it in a string
-function footnoteTextCode(numFootnotes, tableNum){
+function footnoteTextCode(numFootnotes, tableNum, language){
   var textcode = "";
+  var footnote = "";
+  
+  // pick language
+  if(language === "French"){
+    footnote = "Note de bas de page";
+  } else if (language === "English") {
+    footnote = "Footnote";         
+  }
+  
   for(var i = 1; i <= numFootnotes; ++i){
-    textcode += '&lt;sup id="fn' + tableNum + i + '-rf">&lt;a class="fn-lnk" href="#fn' +  tableNum + i + '">&lt;span class="wb-inv">Footnote &lt;/span>' + i + '&lt;/a>&lt;/sup>' + "<br><br>";
+    textcode += '&lt;sup id="fn' + tableNum + i + '-rf">&lt;a class="fn-lnk" href="#fn' +  tableNum + i + '">&lt;span class="wb-inv">' + footnote  + ' &lt;/span>' + i + '&lt;/a>&lt;/sup>' + "<br><br>";
   }
   
   $('#textFootnoteCode').html(textcode);
@@ -78,7 +115,9 @@ function GenerateCode(){
   
   // gets the selected option in the drop down list
   var TableText = document.getElementById("TableText");
+  var Language = document.getElementById("Language");
   var option = TableText.options[TableText.selectedIndex].text; 
+  var language = Language.options[Language.selectedIndex].text;
    
   var numFootnotes = $('#FootNum').val();
   var tableNum = "";
@@ -91,18 +130,11 @@ function GenerateCode(){
       tableNum += num.toString() + ".";
       
       // generates the complete reference code
-      // set up the div class
-      $('#bottomFootnoteClass').text("<div class=\"wb-fnote small wb-init wb-fnote-inited\" role=\"note\" id=\"wb-auto-8\"><dl>");
-
-      footnoteMiddleCode(numFootnotes, tableNum);
-
-      // closes div : the last part of the footnote code
-      $('#bottomFootnoteEnd').text("</dl></div>");
-
-
-      // generates all the text footnote codes
-      footnoteTextCode(numFootnotes, tableNum);
+      footnoteReferenceCode(numFootnotes, tableNum, language);
       
+      // generates all the text footnote codes
+      footnoteTextCode(numFootnotes, tableNum, language);
+
     } else { // user did not input a table num
       Clear();
       $('#alertTableNumber').css("display","block");
@@ -111,21 +143,16 @@ function GenerateCode(){
   } else if (option === "Text") {
     
     // generates the complete reference code
-    // set up the div class
-    $('#bottomFootnoteClass').text("<div class=\"wb-fnote small wb-init wb-fnote-inited\" role=\"note\" id=\"wb-auto-8\"><dl>");
+    // Reference code
+    footnoteReferenceCode(numFootnotes, tableNum, language); 
     
-    // middle code
-    footnoteMiddleCode(numFootnotes, tableNum); 
     
-    // closes div : the last part of the footnote code
-    $('#bottomFootnoteEnd').text("</dl></div>");
-
-
     // generates all the text footnote codes
-    footnoteTextCode(numFootnotes, tableNum);
+    footnoteTextCode(numFootnotes, tableNum, language);
 
 
   }
+  
 }
 
 
