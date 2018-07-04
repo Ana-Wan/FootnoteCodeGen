@@ -46,11 +46,13 @@ function footnoteReferenceCode(numFootnotes, tableNum, language){
     
 	
 	// set up the div class
-	code += '&lt;div class="wb-fnote" role="note">&lt;dl><br> ';
+	code += '&lt;div class="wb-fnote" role="note"><br> ';
 	
 	if(tableNum == ""){ // user selected text
 		code += '&lt;h2 id="fn">' + header  + '&lt;/h2><br>'; // only text footnotes reference has h2 heading
 	}
+  
+  code += "&lt;dl><br>";
 	
   
     for(var i = 1; i <= numFootnotes; ++i){
@@ -87,7 +89,7 @@ function footnoteTextCode(numFootnotes, tableNum, language){
   }
   
   for(var i = 1; i <= numFootnotes; ++i){
-    textcode += '&lt;sup id="fn' + tableNum + i + '-rf">&lt;a class="fn-lnk" href="#fn' +  tableNum + i + '">&lt;span class="wb-inv">' + footnote  + ' &lt;/span>' + i + '&lt;/a>&lt;/sup>' + "<br><br>";
+    textcode += '&lt;sup>&lt;a class="fn-lnk" href="#fn' +  tableNum + i + '">&lt;span class="wb-inv">' + footnote  + ' &lt;/span>' + i + '&lt;/a>&lt;/sup>' + "<br><br>";
   }
   
   $('#textFootnoteCode').html(textcode);
