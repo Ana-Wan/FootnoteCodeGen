@@ -59,8 +59,9 @@ button{
 }
 
 .insertText{
+  user-select: all;
   font-size: 18px;
-  color: #47476b;
+  color: #009933;
   font-family: Arial;
 }
 
